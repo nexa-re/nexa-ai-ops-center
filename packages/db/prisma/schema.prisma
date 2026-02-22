@@ -73,18 +73,18 @@ model Deal {
 }
 
 model Document {
-  id              String   @id @default(uuid())
-  entityType      String   @map("entity_type") // 'Property', 'Project', 'Deal', 'Contact'
-  entityId        String   @map("entity_id")
-  documentType    String   @map("document_type") // 'Contract', 'Invoice', 'Permit', 'Blueprint'
-  fileName        String   @map("file_name")
-  filePath        String   @map("file_path")
-  fileSizeKb      Int?     @map("file_size_kb")
-  mimeType        String?  @map("mime_type")
-  ocrStatus       String   @map("ocr_status") // 'Pending', 'Processing', 'Complete', 'Failed'
-  extractedData   Json?    @map("extracted_data")
-  uploadedBy      String?  @map("uploaded_by")
-  createdAt       DateTime @default(now()) @map("created_at")
+  id            String   @id @default(uuid()) @db.Uuid
+  entityType    String   @map("entity_type") // 'Property', 'Project', 'Deal', 'Contact'
+  entityId      String   @map("entity_id")
+  documentType  String   @map("document_type") // 'Contract', 'Invoice', 'Permit', 'Blueprint'
+  fileName      String   @map("file_name")
+  filePath      String   @map("file_path")
+  fileSizeKb    Int?     @map("file_size_kb")
+  mimeType      String?  @map("mime_type")
+  ocrStatus     String   @map("ocr_status") // 'Pending', 'Processing', 'Complete', 'Failed'
+  extractedData Json?    @map("extracted_data")
+  uploadedBy    String?  @map("uploaded_by")
+  createdAt     DateTime @default(now()) @map("created_at")
 
   @@map("documents")
 }

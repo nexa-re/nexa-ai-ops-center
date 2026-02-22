@@ -6,7 +6,7 @@ export const documentController = {
   getAll: async (req: Request, res: Response) => {
     try {
       const documents = await prisma.document.findMany({
-        orderBy: { uploadedAt: 'desc' },
+        orderBy: { createdAt: 'desc' },
       });
       res.json({ data: documents });
     } catch (error) {
