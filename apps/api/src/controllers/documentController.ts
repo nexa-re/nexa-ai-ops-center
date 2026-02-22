@@ -24,9 +24,11 @@ export const documentController = {
       const newDoc = await prisma.document.create({
         data: {
           fileName: fileName || 'Untitled.pdf',
-          fileType: fileType || 'application/pdf',
-          fileUrl: fileUrl || 'https://example.com/mock.pdf',
+          mimeType: fileType || 'application/pdf',
+          filePath: fileUrl || 'https://example.com/mock.pdf',
           ocrStatus: 'Processing',
+          entityType: 'Property', // Defaulting for mock
+          entityId: 'root', // Defaulting for mock
         }
       });
       
@@ -37,7 +39,7 @@ export const documentController = {
             where: { id: newDoc.id },
             data: {
               ocrStatus: 'Completed',
-              extractedText: 'MOCK OCR TEXT: This real estate document contains standard clauses regarding property transfer, escrows, and financial liabilities. The address recognized is 123 Nexa Blvd.',
+              extractedData: { text: 'MOCK OCR TEXT: This real estate document contains standard clauses regarding property transfer, escrows, and financial liabilities. The address recognized is 123 Nexa Blvd.' },
             }
           });
           console.log(`[OCR] Processing completed for ${newDoc.fileName}`);
