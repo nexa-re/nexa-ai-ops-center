@@ -60,7 +60,7 @@ export const documentController = {
   getById: async (req: Request, res: Response) => {
     try {
       const document = await prisma.document.findUnique({
-        where: { id: req.params.id },
+        where: { id: req.params.id as string },
       });
       
       if (!document) {

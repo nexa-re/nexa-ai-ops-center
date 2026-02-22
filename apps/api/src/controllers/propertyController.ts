@@ -19,7 +19,7 @@ export const propertyController = {
   getById: async (req: Request, res: Response) => {
     try {
       const property = await prisma.property.findUnique({
-        where: { id: req.params.id },
+        where: { id: req.params.id as string },
         include: { projects: true, deals: true }
       });
       
@@ -60,7 +60,7 @@ export const propertyController = {
   update: async (req: Request, res: Response) => {
     try {
       const updatedProperty = await prisma.property.update({
-        where: { id: req.params.id },
+        where: { id: req.params.id as string },
         data: req.body
       });
       res.json({ data: updatedProperty });

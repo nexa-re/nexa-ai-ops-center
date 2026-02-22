@@ -18,7 +18,7 @@ export const projectController = {
   getById: async (req: Request, res: Response) => {
     try {
       const project = await prisma.project.findUnique({
-        where: { id: req.params.id },
+        where: { id: req.params.id as string },
         include: { property: true }
       });
       
@@ -47,7 +47,7 @@ export const projectController = {
   update: async (req: Request, res: Response) => {
     try {
       const updatedProject = await prisma.project.update({
-        where: { id: req.params.id },
+        where: { id: req.params.id as string },
         data: req.body
       });
       res.json({ data: updatedProject });

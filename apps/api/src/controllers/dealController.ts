@@ -18,7 +18,7 @@ export const dealController = {
   getById: async (req: Request, res: Response) => {
     try {
       const deal = await prisma.deal.findUnique({
-        where: { id: req.params.id },
+        where: { id: req.params.id as string },
         include: { property: true }
       });
       
@@ -47,7 +47,7 @@ export const dealController = {
   update: async (req: Request, res: Response) => {
     try {
       const updatedDeal = await prisma.deal.update({
-        where: { id: req.params.id },
+        where: { id: req.params.id as string },
         data: req.body
       });
       res.json({ data: updatedDeal });
