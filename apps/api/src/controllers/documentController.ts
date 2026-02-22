@@ -23,12 +23,14 @@ export const documentController = {
       
       const newDoc = await prisma.document.create({
         data: {
+          documentType: 'Invoice', // Defaulting for mock
           fileName: fileName || 'Untitled.pdf',
           mimeType: fileType || 'application/pdf',
           filePath: fileUrl || 'https://example.com/mock.pdf',
           ocrStatus: 'Processing',
           entityType: 'Property', // Defaulting for mock
           entityId: 'root', // Defaulting for mock
+          uploadedBy: 'System', // Defaulting for mock
         }
       });
       
