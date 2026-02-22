@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Property {
+  id                String    @id @default(uuid())
+  address           String
+  city              String?
+  state             String?
+  zipCode           String?   @map("zip_code")
+  parcelId          String?   @map("parcel_id")
+  lotSizeSqft       Decimal?  @map("lot_size_sqft")
+  zoning            String?
+  acquisitionDate   DateTime? @map("acquisition_date")
+  acquisitionPrice  Decimal?  @map("acquisition_price")
+  currentValue      Decimal?  @map("current_value")
+  status            String    // 'Prospecting', 'Under Contract', 'Owned', 'Sold'
+  propertyType      String    @map("property_type") // 'Single Family', 'Multi-Family', 'Land', 'Commercial'
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  projects          Project[]
+  deals             Deal[]
+
+  @@map("properties")
+}
+
+model Project {
+  id                String    @id @default(uuid())
+  propertyId        String?   @map("property_id")
+  projectName       String    @map("project_name")
+  projectType       String?   @map("project_type") // 'Development', 'Renovation', 'New Build'
+  status            String    // 'Planning', 'Permitting', 'Active', 'Complete'
+  startDate         DateTime? @map("start_date")
+  targetCompletion  DateTime? @map("target_completion")
+  actualCompletion  DateTime? @map("actual_completion")
+  totalBudget       Decimal?  @map("total_budget")
+  spentToDate       Decimal?  @map("spent_to_date")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  property          Property? @relation(fields: [propertyId], references: [id])
+
+  @@map("projects")
+}
+
+model Deal {
+  id                  String    @id @default(uuid())
+  propertyId          String?   @map("property_id")
+  dealName            String    @map("deal_name")
+  dealStage           String    @map("deal_stage") // 'Lead', 'Qualified', 'Due Diligence', 'Closed'
+  purchasePrice       Decimal?  @map("purchase_price")
+  arv                 Decimal?  // After Repair Value
+  estimatedRehabCost  Decimal?  @map("estimated_rehab_cost")
+  projectedRoi        Decimal?  @map("projected_roi")
+  projectedIrr        Decimal?  @map("projected_irr")
+  holdPeriodMonths    Int?      @map("hold_period_months")
+  financingType       String?   @map("financing_type")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
+
+  property            Property? @relation(fields: [propertyId], references: [id])
+
+  @@map("deals")
+}
+
+model Document {
+  id              String   @id @default(uuid())
+  entityType      String   @map("entity_type") // 'Property', 'Project', 'Deal', 'Contact'
+  entityId        String   @map("entity_id")
+  documentType    String   @map("document_type") // 'Contract', 'Invoice', 'Permit', 'Blueprint'
+  fileName        String   @map("file_name")
+  filePath        String   @map("file_path")
+  fileSizeKb      Int?     @map("file_size_kb")
+  mimeType        String?  @map("mime_type")
+  ocrStatus       String   @map("ocr_status") // 'Pending', 'Processing', 'Complete', 'Failed'
+  extractedData   Json?    @map("extracted_data")
+  uploadedBy      String?  @map("uploaded_by")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  @@map("documents")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}

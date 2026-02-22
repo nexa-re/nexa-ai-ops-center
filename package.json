@@ -1,0 +1,19 @@
+{
+  "name": "nexa-ai-ops-center",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "postinstall": "cd packages/db && npx prisma generate"
+  },
+  "devDependencies": {
+    "turbo": "latest"
+  }
+}

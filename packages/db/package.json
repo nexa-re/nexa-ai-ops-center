@@ -1,0 +1,19 @@
+{
+  "name": "@nexa/db",
+  "version": "1.0.0",
+  "description": "Shared database logic for Nexa AI Ops Center",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "generate": "prisma generate",
+    "db:push": "prisma db push",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.2.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.2.1",
+    "typescript": "^5.4.5"
+  }
+}
